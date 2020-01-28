@@ -4,8 +4,11 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
+    "start": "npm run serve",
+    "build": "babel ./src --out-dir dist",
+    "serve": "node dist/server.js",
     "test": "mocha --exit --require @babel/register ./src/__test__",
-    "start": "node ./src",
+    "testadd": "babel-node ./src/addweek.js",
     "dev": "nodemon --exec babel-node ./src"
   },
   "author": "",
@@ -25,6 +28,7 @@
     "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
     "@babel/node": "^7.8.3",
     "@babel/preset-env": "^7.8.3",

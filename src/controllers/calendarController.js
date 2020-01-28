@@ -1,6 +1,5 @@
 import moment from "moment";
 
-import { getEventsInPeriod, createEvent } from "../models/event";
 import {
   getTimeslots,
   getBookingDays,
@@ -8,6 +7,8 @@ import {
   isValidTimeslot,
   isBusinessHours
 } from "../models/booking";
+import { getEventsInPeriod, createEvent } from "../models/event";
+import { padNumber } from "../util/datetime";
 
 /**
  * GET /days
@@ -21,12 +22,6 @@ export const getAvailableDays = (req, res) => {
   if (!(year && month)) {
     const message = missingParamsMessage({ year, month });
     return res.json(returnFailMessage(message));
-  }
-
-  const checkedFormats = checkParamsFormat({ year, month });
-
-  if (checkedFormats) {
-    return res.json(returnFailMessage(checkedFormats));
   }
 
   let queryDate;
@@ -69,7 +64,12 @@ export const getAvailableTimeslots = (req, res) => {
   let queryDate;
 
   try {
-    queryDate = moment.utc(`${year}-${month}-${day}`, "YYYY-MM-DD", true);
+    queryDate = moment.utc(
+      `${year}-${padNumber(month, 2)}-${padNumber(day, 2)}`,
+      "YYYY-MM-DD",
+      true
+    );
+
     if (!queryDate.isValid()) throw queryDate.invalidAt();
   } catch (error) {
     return res.json(returnFailMessage("Invalid date format"));
@@ -79,14 +79,14 @@ export const getAvailableTimeslots = (req, res) => {
     getEventsInPeriod(queryDate, "day", (err, events) => {
       if (err) return res.json(returnFailMessage(err));
 
+      console.log(events);
+
       const startTimes = events.map(event => event.start.dateTime);
       const timeSlots = getTimeslots(queryDate, startTimes);
 
       return res.json({ success: true, timeSlots });
     });
   }
-
-  return res.json(returnFailMessage("Unknown"));
 };
 
 /**
@@ -98,7 +98,7 @@ export const getAvailableTimeslots = (req, res) => {
 export const createBooking = (req, res) => {
   const { year, month, day, hour, minute } = req.query;
 
-  if (!(year && month && day && hour && minute)) {
+  if (!(year && month && day && hour && minute !== null)) {
     const message = missingParamsMessage({ year, month, day, hour, minute });
     return res.json(returnFailMessage(message));
   }
@@ -128,7 +128,7 @@ export const createBooking = (req, res) => {
   const { startTime, endTime } = returnBookingSlot(date);
 
   createEvent({ startTime, endTime }, (err, data) => {
-    if (err) return res.json(returnFailMessage("Invalid time slot"));
+    if (err) return res.json(returnFailMessage("Invalid time slot " + err));
 
     res.status(200).json({ success: true, startTime, endTime });
   });
@@ -150,25 +150,6 @@ const checkOpenTimeslots = (events, day) => {
 
   const timeSlots = getTimeslots(day, eventsInDay);
   return timeSlots.length > 0;
-};
-
-/**
- * Returns a message for invalid parameters
- * @param {*} params
- * @return {String}
- */
-const checkParamsFormat = params => {
-  let message = "Request has invalid parameter:";
-  let invalidCount = 0;
-
-  Object.keys(params).forEach(key => {
-    if (isNaN(params[key])) {
-      message += ` ${key},`;
-      invalidCount++;
-    }
-  });
-
-  return invalidCount ? message : null;
 };
 
 /**

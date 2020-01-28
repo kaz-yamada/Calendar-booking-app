@@ -6,7 +6,7 @@ import {
   returnBookingSlot,
   isValidTimeslot,
   getBookingDays
-} from "../../models/booking";
+} from "../models/booking";
 
 chai.use(chaiHttp);
 
@@ -42,12 +42,12 @@ describe("Testing bookings", () => {
   });
 
   it("Check if booking time has correct length", () => {
-    const startTime = moment
+    const date = moment
       .utc(new Date())
       .hour(9)
       .startOf("h");
 
-    const { endTime } = returnBookingSlot(startTime);
+    const { startTime, endTime } = returnBookingSlot(date);
 
     assert.equal(moment(endTime).diff(startTime, "minute"), 40);
   });

@@ -3,6 +3,8 @@ import fs from "fs";
 import readline from "readline";
 import open from "open";
 import { google } from "googleapis";
+import "@babel/polyfill";
+
 import { readFilePromise } from "../util/fileutil";
 
 const CREDENTIAL_PATH = "credentials.json";

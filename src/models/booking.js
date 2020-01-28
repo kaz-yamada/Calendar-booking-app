@@ -69,14 +69,13 @@ export const getTimeslots = (day, bookedTimes) => {
 export const isBusinessHours = date => {
   const start = getStartOfDay(date);
   // Date is in the weekend
-  if (!isWeekday(date)) {
-    return false;
-  }
+  if (!isWeekday(date)) return false;
 
   // Outside business hours
-  if (date.utc().isBefore(start.utc()) && moment.utc(date).hour(END_OF_DAY)) {
+  if (date.isBefore(start) && date.isAfter(start.hour(END_OF_DAY)))
     return false;
-  }
+
+  return true;
 };
 
 /**
@@ -104,10 +103,7 @@ export const isValidTimeslot = date => {
  */
 export const returnBookingSlot = date => ({
   startTime: date.utc().toDate(),
-  endTime: moment
-    .utc(date)
-    .add(BOOKING_LENGTH, "m")
-    .toDate()
+  endTime: date.add(BOOKING_LENGTH, "m").toDate()
 });
 
 const getStartOfDay = date =>
