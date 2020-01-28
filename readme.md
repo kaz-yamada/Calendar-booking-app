@@ -1,4 +1,16 @@
-# To set up this application
+# Calendar booking app
+
+This is a small [Express JS](https://expressjs.com/)
+
+# Prerequisites
+
+To run this locally
+
+1. Install [Node.js](https://nodejs.org/)
+2. Run the `npm install` command from the project root to install dependencies
+3. Get google api credentials (see below)
+
+## Get Google API credentials
 
 1. Go to https://console.developers.google.com/
 2. Create a project and enable the Google Calendar API
@@ -9,11 +21,11 @@
 
 Now you have 2 options...
 
-## Option 1: use .env files
+### Option 1: use .env files
 
-Add your project id, client id and client secret to the .env file under "PROJECT_ID", "CLIENT_ID" and "CLIENT_SECRET" respectively. Just follow the format of the  `.env.example` file
+Add your project id, client id and client secret to the .env file under "PROJECT_ID", "CLIENT_ID" and "CLIENT_SECRET" respectively. Just follow the format of the `.env.example` file
 
-## Option 2: use json file
+### Option 2: use json file
 
 In your project in the google developer console:
 
@@ -23,4 +35,13 @@ In your project in the google developer console:
 4. "Download json"
 5. place the json at the root of this project and rename it to "credentials.json"
 
+# Run
+
 Once you've set up the google auth credentials you can run `npm start` to start up the server or `npm run dev` to start and watch for changes in files
+
+# Credits
+
+Kazuki Yamada
+
+- [Website](http://kazyamada.com/)
+- [Github](https://github.com/kaz-yamada)
