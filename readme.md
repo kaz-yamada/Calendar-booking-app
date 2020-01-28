@@ -29,11 +29,11 @@ Add your project id, client id and client secret to the .env file under "PROJECT
 
 In your project in the google developer console:
 
-1. go to "Credentials"
+1. Go to "Credentials"
 2. "OAuth 2.0 Client IDs"
-3. select your newly created credentials
+3. Select your newly created credentials
 4. "Download json"
-5. place the json at the root of this project and rename it to "credentials.json"
+5. Place the json at the root of this project and rename it to "credentials.json"
 
 # Run
 
