@@ -11,7 +11,7 @@ Now you have 2 options...
 
 ## Option 1: use .env files
 
-Add your project id, client id and client secret to the .env file under "PROJECT_ID", "CLIENT_ID" and "CLIENT_SECRET" respectively
+Add your project id, client id and client secret to the .env file under "PROJECT_ID", "CLIENT_ID" and "CLIENT_SECRET" respectively. Just follow the format of the  `.env.example` file
 
 ## Option 2: use json file
 
