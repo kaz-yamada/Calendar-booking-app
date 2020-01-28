@@ -1,6 +1,6 @@
 # Calendar booking app
 
-This is a small [Express JS](https://expressjs.com/)
+This is a small [Express JS](https://expressjs.com/) application using [Google Calendar API](https://developers.google.com/calendar)
 
 # Prerequisites
 
