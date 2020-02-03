@@ -8,7 +8,7 @@
     "build": "babel ./src --out-dir dist",
     "serve": "node dist/server.js",
     "test": "mocha --exit --require @babel/register ./src/__test__",
-    "testadd": "babel-node ./src/addweek.js",
+    "seeddata": "babel-node ./src/util/seedData.js",
     "dev": "nodemon --exec babel-node ./src"
   },
   "author": "",

@@ -61,18 +61,40 @@ export const getTimeslots = (day, bookedTimes) => {
   return timeSlots;
 };
 
+export const getRandomTimeslots = day => {
+  const timeSlots = [];
+  const curr = getStartOfDay(day);
+  const finishTime = moment.utc(day).hour(END_OF_DAY);
+
+  do {
+    if (Math.random() >= 0.5) {
+      timeSlots.push(returnBookingSlot(curr));
+      curr.add(BREAK_LENGTH, "m");
+    } else {
+      curr.add(BOOKING_LENGTH + BREAK_LENGTH, "m");
+    }
+  } while (curr.isBefore(finishTime));
+
+  return timeSlots;
+};
+
 /**
  * Checks if date is during business hours
  * @param {*} date
  * @return {Boolean}
  */
 export const isBusinessHours = date => {
-  const start = getStartOfDay(date);
+  const startTime = getStartOfDay(date);
+  const momentDate = moment.utc(date);
+
   // Date is in the weekend
   if (!isWeekday(date)) return false;
 
   // Outside business hours
-  if (date.isBefore(start) && date.isAfter(start.hour(END_OF_DAY)))
+  if (
+    momentDate.isBefore(startTime) &&
+    momentDate.isAfter(startTime.hour(END_OF_DAY))
+  )
     return false;
 
   return true;
@@ -84,14 +106,15 @@ export const isBusinessHours = date => {
  * @return {Boolean}
  */
 export const isValidTimeslot = date => {
-  const start = getStartOfDay(date);
+  const startTime = getStartOfDay(date);
+  const momentDate = moment.utc(date);
 
   do {
-    if (moment.utc(date).isSame(start.utc())) {
+    if (momentDate.isSame(startTime.utc())) {
       return true;
     }
-    start.add(BOOKING_LENGTH + BREAK_LENGTH, "m");
-  } while (start.utc().isBefore(moment.utc(date).hour(END_OF_DAY)));
+    startTime.add(BOOKING_LENGTH + BREAK_LENGTH, "m");
+  } while (startTime.utc().isBefore(momentDate.hour(END_OF_DAY)));
 
   return false;
 };

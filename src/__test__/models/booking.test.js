@@ -6,7 +6,7 @@ import {
   returnBookingSlot,
   isValidTimeslot,
   getBookingDays
-} from "../models/booking";
+} from "../../models/booking";
 
 chai.use(chaiHttp);
 
