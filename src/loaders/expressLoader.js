@@ -1,7 +1,10 @@
 import bodyParser from "body-parser";
+import cors from "cors";
+
 import routes from "../routes";
 
 export default app => {
+  app.use(cors());
   // Health check
   app.get("/status", (req, res) => {
     res.status(200).end();
