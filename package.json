@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "googleapis": "^47.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.27",
     "open": "^7.0.0",
     "passport": "^0.4.1",
